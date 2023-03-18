@@ -1,14 +1,10 @@
-#include "Print.h"
-#include <cstring>
-
+#include "Headfile.h"
 
 using namespace std;
 
-#define LegalInput (2)
+
 
 int main()
 {
-    cout << "Hello World " << endl;
 
-    return 0;
 }

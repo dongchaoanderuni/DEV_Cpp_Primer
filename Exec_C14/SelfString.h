@@ -14,11 +14,21 @@ using namespace std;
 class String
 {
 friend ostream& operator<<(ostream& os, const String &lhs);
+friend bool operator==(const String&lhs, const String& rhs);
+friend bool operator!=(const String&lhs, const String& rhs);
+friend bool operator<(const String&lhs, const String&rhs);
+friend bool operator<=(const String&lhs, const String&rhs);
+friend bool operator>=(const String&lhs, const String&rhs);
+friend bool operator>(const String&lhs, const String&rhs);
+
 public:
     String():pChar(nullptr), sz(0) {}
     String(const char*);
     String(const String&);
     String(String &&) noexcept;
+
+
+    char& operator[](size_t n);
     String &operator=(String &);
     String &operator=(const String &);
     String &operator=(std::initializer_list<char>);
@@ -119,6 +129,74 @@ ostream& operator<<(ostream& os, const String &lhs)
         os << ele;
     }
     return os;
+}
+
+bool operator==(const String& lhs, const String& rhs)
+{
+    if(lhs.size() != rhs.size())
+    {
+        return false;
+    }
+    for(auto iterLhs = lhs.begin(), iterRhs = rhs.begin(); iterLhs != lhs.end(); iterLhs++,iterRhs++)
+    {
+        if(*iterLhs != *iterRhs)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool operator!=(const String& lhs, const String& rhs)
+{
+    return !(lhs == rhs);
+}
+
+
+int StringCmp(const String&lhs, const String&rhs)
+{
+    auto iterLhs = lhs.begin();
+    auto iterRhs = rhs.begin();
+    while((iterLhs != lhs.end())&&(*iterLhs == *iterRhs))
+    {
+        iterLhs++;
+        iterRhs++;
+    }
+
+    if (iterLhs == lhs.end() && iterRhs == rhs.end()) // both strings are equal
+        return 0;
+    else if (iterLhs == lhs.end()) // lhs string is a prefix of rhs string
+        return -1;
+    else if (iterRhs == rhs.end()) // rhs string is a prefix of lhs string
+        return 1;
+    else // compare the first differing characters
+        return (*iterLhs < *iterRhs) ? -1 : 1;
+}
+
+bool operator<(const String&lhs, const String&rhs)
+{
+    return (StringCmp(lhs,rhs) < 0);
+}
+
+bool operator<=(const String&lhs, const String&rhs)
+{
+    return (StringCmp(lhs,rhs) <= 0);
+}
+
+bool operator>(const String&lhs, const String&rhs)
+{
+    return (StringCmp(lhs,rhs) > 0);
+}
+
+bool operator>=(const String&lhs, const String&rhs)
+{
+    return (StringCmp(lhs,rhs) >= 0);
+}
+
+char& String::operator[](size_t n)
+{
+
+    return (pChar[n]);
 }
 
 #endif

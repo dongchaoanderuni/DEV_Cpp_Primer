@@ -13,6 +13,9 @@ class StrBlob;
 class  StrBlobPtr
 {
 friend bool eq(const StrBlobPtr &, const StrBlobPtr &);
+inline bool neq(const StrBlobPtr &lhs, const StrBlobPtr &rhs);
+friend bool operator==(const StrBlobPtr &, const StrBlobPtr &);
+friend bool operator!=(const StrBlobPtr &, const StrBlobPtr &);
 
 public:
     StrBlobPtr(): curr(0) {};
@@ -63,6 +66,22 @@ shared_ptr<vector<string>> StrBlobPtr::check(size_t sz, const string& msg) const
     }
 
     return ret;
+}
+
+inline bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    auto left = lhs.wptr.lock();
+    auto right = rhs.wptr.lock();
+    if(left == right)
+    {
+        return(!right || lhs.curr == rhs.curr);
+    }
+    return false;
+}
+
+inline bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
+{
+    return !eq(lhs,rhs);
 }
 
 inline bool eq(const StrBlobPtr &lhs, const StrBlobPtr &rhs)
