@@ -26,5 +26,6 @@
 #include <string>
 #include <stdexcept>
 #include <utility>
+#include <cassert>
 
 #endif
