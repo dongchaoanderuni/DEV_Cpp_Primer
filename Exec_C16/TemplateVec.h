@@ -48,6 +48,12 @@ template <typename T>
 bool operator>=(const Vec<T>&, const Vec<T> &);
 
 template <typename T>
+void print(Vec<T>&);
+
+template <typename T>
+void print(const Vec<T>&);
+
+template <typename T>
 class Vec
 {
 friend bool operator==  <T>(const Vec<T>&, const Vec<T> &);
@@ -56,6 +62,8 @@ friend bool operator<   <T>(const Vec<T>&, const Vec<T> &);
 friend bool operator<=  <T>(const Vec<T>&, const Vec<T> &);
 friend bool operator>   <T>(const Vec<T>&, const Vec<T> &);
 friend bool operator>=  <T>(const Vec<T>&, const Vec<T> &);
+friend void print<T>(Vec<T>&);
+friend void print<T>(const Vec<T>&);
 public:
     Vec():elements(nullptr),first_free(nullptr),cap(nullptr) {}
     Vec(Vec &&vec) noexcept;
@@ -418,5 +426,26 @@ T& Vec<T>::operator[](size_t n)
 {
     return (elements[n]);
 }
+
+template <typename T>
+void print(Vec<T>&rhs)
+{
+    for(size_t i = 0; i != rhs.size(); i++)
+    {
+        cout << rhs[i] << " ";
+    }
+    cout << endl;
+}
+
+template <typename T>
+void print(const Vec<T>&rhs)
+{
+    for(auto begin = rhs.begin(); begin != rhs.end(); begin++)
+    {
+        cout << *begin << " ";
+    }
+    cout << endl;
+}
+
 
 #endif

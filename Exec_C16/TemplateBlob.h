@@ -22,6 +22,7 @@ public:
 
     /** 构造函数 */
     Blob();
+    template <typename IT> Blob(IT, IT);
     Blob(std::initializer_list<T> il);
 
     /** Blob中元素数目 */
@@ -42,7 +43,6 @@ public:
     T& operator[](size_type i);
     const T& operator[](size_type i) const;
 
-
 protected:
 
 private:
@@ -50,8 +50,14 @@ private:
     void check(size_type i, const std::string &msg) const;
 };
 
-template <typename T> Blob<T>::Blob():data(std::make_shared<std::vector<T>>()) {}
-template <typename T> Blob<T>::Blob(std::initializer_list<T> il):data(std::make_shared<std::vector<T>>(il)) {}
+template <typename T> 
+Blob<T>::Blob():data(std::make_shared<std::vector<T>>()) {}
+template <typename T> 
+Blob<T>::Blob(std::initializer_list<T> il):data(std::make_shared<std::vector<T>>(il)) {}
+template <typename T>
+template <typename IT>
+Blob<T>::Blob(IT begin, IT end):data(std::make_shared<std::vector<T>>(begin, end)){}
+
 
 template <typename T>
 void  Blob<T>::pop_back()
