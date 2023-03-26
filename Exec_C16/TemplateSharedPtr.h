@@ -14,7 +14,7 @@ public:
     void reset(T* p, void (*d)(T*)){free(); ptr = p; ref_count = new size_t(1); deleter = d;}
     ~tSharedPtr() {free();}
     
-    tSharedPtr<T> &operator=(const tSharedPtr<T>&);
+    tSharedPtr &operator=(const tSharedPtr&);
     T& operator*() const {return *ptr;}
     T* operator->() const {return ptr;}
 
