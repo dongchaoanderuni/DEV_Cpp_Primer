@@ -6,8 +6,14 @@
 
 using namespace std;
 
+class Sales_data;
+
+template <>
+struct std::hash<Sales_data>;
+
 class Sales_data 
 {
+friend class std::hash<Sales_data>;
 friend Sales_data add(const Sales_data&, const Sales_data&);
 friend ostream &print(ostream&, const Sales_data&);
 friend istream &read(istream&, Sales_data&);
@@ -15,8 +21,8 @@ friend Sales_data operator+(const Sales_data&, const Sales_data&);
 friend Sales_data operator-(const Sales_data&, const Sales_data&);
 friend ostream& operator<<(ostream &, const Sales_data&);
 friend istream& operator>>(istream &, Sales_data&);
-friend bool operator==(const  Sales_data&, const Sales_data&);
-friend bool operator!=(const Sales_data&, const Sales_data &);
+// friend bool operator==(const  Sales_data&, const Sales_data&);
+// friend bool operator!=(const Sales_data&, const Sales_data &); 
 
 public:
     Sales_data() = default;
@@ -32,8 +38,8 @@ public:
     Sales_data& operator+=(const Sales_data& rhs);
     Sales_data& operator-=(const Sales_data& rhs);
     Sales_data& operator=(const Sales_data&);   
-
-
+    bool operator==(const Sales_data&) const;
+    bool operator!=(const Sales_data &rhs) const;
 
 private:
     double avg_price() const {return units_sold?revenue/units_sold:0; }
@@ -144,19 +150,31 @@ ostream &operator<<(ostream &os, const Sales_data& item)
     return os;
 }
 
-bool operator==(const Sales_data&lhs, const Sales_data &rhs)
+// bool operator==(const Sales_data&lhs, const Sales_data &rhs)
+// {
+//     if((lhs.bookNo == rhs.bookNo))
+//     {
+//         return true;
+//     }
+//     return false; 
+// }
+
+bool Sales_data::operator==(const Sales_data &rhs) const
 {
-    if((lhs.bookNo == rhs.bookNo))
-    {
-        return true;
-    }
-    return false; 
+    return ((bookNo == rhs.bookNo)
+            &&(units_sold == rhs.units_sold)
+            &&(revenue == rhs.revenue));
 }
 
-bool operator!=(const Sales_data&lhs, const Sales_data &rhs)
+bool Sales_data::operator!=(const Sales_data &rhs) const
 {
-    return !(lhs == rhs);
+    return !operator==(rhs);
 }
+
+// bool operator!=(const Sales_data&lhs, const Sales_data &rhs)
+// {
+//     return !(lhs == rhs);
+// }
 
 
 ostream &print(ostream &os, const Sales_data &item)

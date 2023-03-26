@@ -84,6 +84,8 @@ public:
     size_t size() const {return first_free - elements;}
     size_t capacity() const {return cap - elements;}
 
+    template <typename... Args> void emplace_back(Args&&...);
+
     T* begin() const {return elements;}
     T* end() const {return first_free;}
 
@@ -115,6 +117,14 @@ Vec<T>::Vec(Vec<T> &&vec) noexcept
     first_free = std::move(vec.first_free);
     cap = std::move(vec.cap);   
     vec.elements = vec.first_free = vec.cap = nullptr;
+}
+
+template <typename T>
+template <typename... Args>
+void Vec<T>::emplace_back(Args&&... args)
+{
+    chk_n_alloc();
+    alloc.construct(first_free++, std::forward<Args>(args)...);
 }
 
 template <typename T>

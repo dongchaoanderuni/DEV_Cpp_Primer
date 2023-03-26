@@ -62,4 +62,10 @@ void tSharedPtr<T>::free()
     }
 }
 
+template <typename T, class... Args>
+tSharedPtr<T> make_tShared(Args&&... args)
+{
+    return tSharedPtr<T>(new T(std::forward<Args>(args)...));
+}
+
 #endif
