@@ -27,5 +27,6 @@
 #include <stdexcept>
 #include <utility>
 #include <cassert>
+#include <type_traits>
 
 #endif
