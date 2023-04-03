@@ -1,3 +1,8 @@
 {
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "__tuple": "cpp",
+        "array": "cpp",
+        "tuple": "cpp"
+    }
 }
