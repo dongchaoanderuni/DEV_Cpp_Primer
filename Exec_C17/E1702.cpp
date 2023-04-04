@@ -4,7 +4,7 @@ using namespace std;
 
 int main() 
 {
-    cout << "Hello World! " << endl;
-    
+    tuple<string, vector<string>, pair<string, int>> someThing;
+
     return 0;
 }

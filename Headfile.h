@@ -29,5 +29,8 @@
 #include <cassert>
 #include <type_traits>
 #include <tuple>
+#include <bitset>
+#include <regex>
+#include <random>
 
 #endif
